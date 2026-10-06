@@ -111,11 +111,13 @@
             </plugin>
 
             <!-- SonarCloud: análisis de calidad de código -->
-            <!-- v3.9.x es la última versión compatible con Java 17 -->
+            <!-- 3.11.0.6578: compatible con Maven 3.9.x (3.9.1 falla con
+                 "NOPLoggerFactory cannot be cast to LoggerContext").
+                 Requiere Java 17+ para el scanner: el runner usa Java 21. -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.9.1.2184</version>
+                <version>3.11.0.6578</version>
             </plugin>
 
             <!-- JaCoCo: cobertura de código en los tests -->
