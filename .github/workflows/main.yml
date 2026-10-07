@@ -72,11 +72,14 @@ jobs:
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
       # ── 6. Escanear dependencias con Snyk ──
+      # JAVA_HOME="" evita que el JAVA_HOME del runner (inexistente dentro
+      # del contenedor de la acción) rompa a Maven; el contenedor usa su propio Java.
       - name: Escaneo de vulnerabilidades Snyk (dependencias)
         uses: snyk/actions/maven@master
         continue-on-error: true           # no bloquea el pipeline si hay vulnerabilidades
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          JAVA_HOME: ""
         with:
           args: --severity-threshold=high
 
