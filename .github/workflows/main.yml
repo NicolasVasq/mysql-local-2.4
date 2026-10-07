@@ -83,13 +83,13 @@ jobs:
         with:
           args: --severity-threshold=high
 
-      # ── 6b. El contenedor Snyk escribe archivos como root: restablecer dueño ──
-      - name: Corregir permisos tras Snyk
-        run: sudo chown -R $(id -un):$(id -gn) .
-
       # ── 7. Compilar el .jar ──
+      # El contenedor Snyk escribe archivos como root: se restablece el dueño
+      # antes de compilar para evitar "jar is read-only".
       - name: Build del proyecto
-        run: mvn package -DskipTests
+        run: |
+          sudo chown -R $(id -un):$(id -gn) .
+          mvn package -DskipTests
 
       # ── 8. Login en DockerHub ──
       - name: Login en DockerHub
